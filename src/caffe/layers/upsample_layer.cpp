@@ -79,7 +79,6 @@ namespace caffe {
 			!(upsample_param.has_height_scale() && upsample_param.has_width_scale())) {
 			CHECK_GE(0, 1) << "Upsample either has two bottom or use (height and width) or (height_scale and width_scale)!";			
 		}
-
 	}
 
 	template <typename Dtype>
@@ -95,14 +94,14 @@ namespace caffe {
 		else if (upsample_param.has_height() && upsample_param.has_width()) {
 			height_ = upsample_param.height();
 			width_ = upsample_param.width();
-			CHECK_GE(height_, 1) << "Upsample height must greater or equal two";
-			CHECK_GE(width_, 1) << "Upsample width must greater or equal two";
+			CHECK_GE(height_, 2) << "Upsample height must greater or equal two";
+			CHECK_GE(width_, 2) << "Upsample width must greater or equal two";
 		}
 		else if(upsample_param.has_height_scale() && upsample_param.has_width_scale()) {
 			height_scale_ = upsample_param.height_scale();
 			width_scale_ = upsample_param.width_scale();
-			CHECK_GE(height_scale_, 1) << "Upsample height_scale must greater or equal two";
-			CHECK_GE(width_scale_, 1) << "Upsample width_scale must greater or equal two";	
+			CHECK_GE(height_scale_, 2) << "Upsample height_scale must greater or equal two";
+			CHECK_GE(width_scale_, 2) << "Upsample width_scale must greater or equal two";	
 
 			height_ = bottom[0]->height()*height_scale_;
 			width_ = bottom[0]->width()*width_scale_;
@@ -110,7 +109,7 @@ namespace caffe {
 		else {
 			CHECK_GE(0, 1) << "Upsample either has two bottom or use (height and width) or (height_scale and width_scale)!";			
 		}
-
+		printf("AAAAAAAAAAAAAAAAAAAA:%d,%d\n", height_,width_);
 		vector<int> out_shape(4,1);
 		out_shape[0] = bottom[0]->num();
 		out_shape[1] = bottom[0]->channels();
