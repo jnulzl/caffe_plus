@@ -1,6 +1,6 @@
 # Update
 - 2020-03-29 Add `caffemodel2txt.cpp` 
-- 2020-03-28 Add some new layers, `permute`( from[ssd](https://github.com/weiliu89/caffe/tree/ssd))and `Upsample`(`nearest` and `bilinear`,only forward) based on origin [caffe](https://github.com/BVLC/caffe).Source is:
+- 2020-03-28 Add some new layers, `permute`( from[ssd](https://github.com/weiliu89/caffe/tree/ssd)) and `Upsample`(`nearest` and `bilinear`,only forward) based on origin [caffe](https://github.com/BVLC/caffe). Source is:
 ```
 include/caffe/layers/permute_layer.hpp
 src/caffe/layers/permute_layer.cpp
