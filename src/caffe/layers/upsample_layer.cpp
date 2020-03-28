@@ -108,8 +108,7 @@ namespace caffe {
 		}
 		else {
 			CHECK_GE(0, 1) << "Upsample either has two bottom or use (height and width) or (height_scale and width_scale)!";			
-		}
-		printf("AAAAAAAAAAAAAAAAAAAA:%d,%d\n", height_,width_);
+		}		
 		vector<int> out_shape(4,1);
 		out_shape[0] = bottom[0]->num();
 		out_shape[1] = bottom[0]->channels();
