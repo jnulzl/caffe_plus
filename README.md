@@ -1,3 +1,77 @@
+# Update
+- 2020-03-29 Add `caffemodel2txt.cpp` 
+- 2020-03-28 Add some new layers, `permute`( from[ssd](https://github.com/weiliu89/caffe/tree/ssd))and `Upsample`(`nearest` and `bilinear`,only forward) based on origin [caffe](https://github.com/BVLC/caffe).Source is:
+```
+include/caffe/layers/permute_layer.hpp
+src/caffe/layers/permute_layer.cpp
+src/caffe/layers/permute_layer.cu
+include/caffe/layers/upsample_layer.hpp
+src/caffe/layers/upsample_layer.cpp
+src/caffe/layers/upsample_layer.cu
+```
+# Example
+
+## `Caffemodle2txt layer`
+
+- Convert a caffemodel to txt or txt to caffemodel
+
+```shell
+Usage:
+	./build/tools/caffemodel2txt c2t[t2c] caffemodel_path[txt_path] txt_path[caffemodel_path]
+```
+
+## `Upsample layer`
+
+- Upsample shape of bottom[0] to shape of bottom[1]
+
+```
+layer{
+    name:"Upsample_nearest"
+    type:"Upsample"
+    bottom:"Conv2d_87" #Blob Conv2d_87's shape is [1,16,32,32]
+    bottom:"Conv2d_84" #Blob Conv2d_84's shape is [1,16,48,48]
+    top:"Upsample_nearest" #Blob Upsample_nearest's shape is [1,16,48,48]
+    upsample_param{
+	    mode: NEAREST # or BILINEAR
+    }
+}
+```
+
+- Upsample shape of bottom to `HEIGHT` and `WIDTH`
+
+```
+layer{
+    name:"Upsample_nearest"
+    type:"Upsample"
+    bottom:"Conv2d_87" #Blob Conv2d_87's shape is [1,16,32,32]
+    top:"Upsample_nearest" #Blob Upsample_nearest's shape is [1,16,HEIGHT,WIDTH]
+    upsample_param{
+        mode: NEAREST # or BILINEAR
+        height: HEIGHT
+        width: WIDTH
+    }
+}
+```
+
+
+- Upsample shape of bottom to `HEIGHT_SCALE` x `bottom_height` and `WIDTH_SCALE` x `bottom_width`
+
+```
+layer{
+    name:"Upsample_nearest"
+    type:"Upsample"
+    bottom:"Conv2d_87" #Blob Conv2d_87's shape is [1,16,32,32]
+    top:"Upsample_nearest" #Blob Upsample_nearest's shape is [1,16,32*HEIGHT_SCALE,32*WIDTH_SCALE]
+    upsample_param{
+        mode: NEAREST # or BILINEAR
+        height_scale: HEIGHT_SCALE
+        width_scale: WIDTH_SCALE
+    }
+}
+```
+- A face detection example  using above upsample see[Pytorch_Retinaface_To_Caffe](https://github.com/jnulzl/Pytorch_Retinaface_To_Caffe/tree/master/toCaffe/models)
+
+
 # Caffe
 
 [![Build Status](https://travis-ci.org/BVLC/caffe.svg?branch=master)](https://travis-ci.org/BVLC/caffe)

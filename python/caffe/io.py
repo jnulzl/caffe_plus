@@ -14,7 +14,7 @@ except:
         raise
 
 
-## proto / datum / ndarray conversion
+# proto / datum / ndarray conversion
 def blobproto_to_array(blob, return_diff=False):
     """
     Convert a blob proto to an array. In default, we will just return the data,
@@ -32,6 +32,7 @@ def blobproto_to_array(blob, return_diff=False):
         return data.reshape(blob.num, blob.channels, blob.height, blob.width)
     else:
         return data.reshape(blob.shape.dim)
+
 
 def array_to_blobproto(arr, diff=None):
     """Converts a N-dimensional array to blob proto. If diff is given, also
@@ -93,7 +94,7 @@ def datum_to_array(datum):
             datum.channels, datum.height, datum.width)
 
 
-## Pre-processing
+# Pre-processing
 
 class Transformer:
     """
@@ -106,6 +107,7 @@ class Transformer:
     ----------
     net : a Net for which the input should be prepared
     """
+
     def __init__(self, inputs):
         self.inputs = inputs
         self.transpose = {}
@@ -260,9 +262,9 @@ class Transformer:
                 in_shape = self.inputs[in_][1:]
                 m_min, m_max = mean.min(), mean.max()
                 normal_mean = (mean - m_min) / (m_max - m_min)
-                mean = resize_image(normal_mean.transpose((1,2,0)),
-                        in_shape[1:]).transpose((2,0,1)) * \
-                        (m_max - m_min) + m_min
+                mean = resize_image(normal_mean.transpose((1, 2, 0)),
+                                    in_shape[1:]).transpose((2, 0, 1)) * \
+                    (m_max - m_min) + m_min
         self.mean[in_] = mean
 
     def set_input_scale(self, in_, scale):
@@ -280,7 +282,7 @@ class Transformer:
         self.input_scale[in_] = scale
 
 
-## Image IO
+# Image IO
 
 def load_image(filename, color=True):
     """
@@ -373,7 +375,7 @@ def oversample(images, crop_dims):
             curr += 1
     crops_ix[4] = np.tile(im_center, (1, 2)) + np.concatenate([
         -crop_dims / 2.0,
-         crop_dims / 2.0
+        crop_dims / 2.0
     ])
     crops_ix = np.tile(crops_ix, (2, 1))
 
@@ -385,5 +387,5 @@ def oversample(images, crop_dims):
         for crop in crops_ix:
             crops[ix] = im[crop[0]:crop[2], crop[1]:crop[3], :]
             ix += 1
-        crops[ix-5:ix] = crops[ix-5:ix, :, ::-1, :]  # flip for mirrors
+        crops[ix - 5:ix] = crops[ix - 5:ix, :, ::-1, :]  # flip for mirrors
     return crops

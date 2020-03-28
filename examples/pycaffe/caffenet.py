@@ -4,21 +4,25 @@ from caffe.proto import caffe_pb2
 
 # helper function for common structures
 
+
 def conv_relu(bottom, ks, nout, stride=1, pad=0, group=1):
     conv = L.Convolution(bottom, kernel_size=ks, stride=stride,
-                                num_output=nout, pad=pad, group=group)
+                         num_output=nout, pad=pad, group=group)
     return conv, L.ReLU(conv, in_place=True)
+
 
 def fc_relu(bottom, nout):
     fc = L.InnerProduct(bottom, num_output=nout)
     return fc, L.ReLU(fc, in_place=True)
 
+
 def max_pool(bottom, ks, stride=1):
     return L.Pooling(bottom, pool=P.Pooling.MAX, kernel_size=ks, stride=stride)
 
+
 def caffenet(lmdb, batch_size=256, include_acc=False):
     data, label = L.Data(source=lmdb, backend=P.Data.LMDB, batch_size=batch_size, ntop=2,
-        transform_param=dict(crop_size=227, mean_value=[104, 117, 123], mirror=True))
+                         transform_param=dict(crop_size=227, mean_value=[104, 117, 123], mirror=True))
 
     # the net itself
     conv1, relu1 = conv_relu(data, 11, 96, stride=4)
@@ -44,12 +48,14 @@ def caffenet(lmdb, batch_size=256, include_acc=False):
     else:
         return to_proto(loss)
 
+
 def make_net():
     with open('train.prototxt', 'w') as f:
         print(caffenet('/path/to/caffe-train-lmdb'), file=f)
 
     with open('test.prototxt', 'w') as f:
         print(caffenet('/path/to/caffe-val-lmdb', batch_size=50, include_acc=True), file=f)
+
 
 if __name__ == '__main__':
     make_net()

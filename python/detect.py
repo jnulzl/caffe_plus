@@ -46,13 +46,13 @@ def main(argv):
     parser.add_argument(
         "--model_def",
         default=os.path.join(pycaffe_dir,
-                "../models/bvlc_reference_caffenet/deploy.prototxt"),
+                             "../models/bvlc_reference_caffenet/deploy.prototxt"),
         help="Model definition file."
     )
     parser.add_argument(
         "--pretrained_model",
         default=os.path.join(pycaffe_dir,
-                "../models/bvlc_reference_caffenet/bvlc_reference_caffenet.caffemodel"),
+                             "../models/bvlc_reference_caffenet/bvlc_reference_caffenet.caffemodel"),
         help="Trained model weights file."
     )
     parser.add_argument(
@@ -116,9 +116,9 @@ def main(argv):
 
     # Make detector.
     detector = caffe.Detector(args.model_def, args.pretrained_model, mean=mean,
-            input_scale=args.input_scale, raw_scale=args.raw_scale,
-            channel_swap=channel_swap,
-            context_pad=args.context_pad)
+                              input_scale=args.input_scale, raw_scale=args.raw_scale,
+                              channel_swap=channel_swap,
+                              context_pad=args.context_pad)
 
     # Load input.
     t = time.time()

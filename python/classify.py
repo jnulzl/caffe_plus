@@ -31,13 +31,13 @@ def main(argv):
     parser.add_argument(
         "--model_def",
         default=os.path.join(pycaffe_dir,
-                "../models/bvlc_reference_caffenet/deploy.prototxt"),
+                             "../models/bvlc_reference_caffenet/deploy.prototxt"),
         help="Model definition file."
     )
     parser.add_argument(
         "--pretrained_model",
         default=os.path.join(pycaffe_dir,
-                "../models/bvlc_reference_caffenet/bvlc_reference_caffenet.caffemodel"),
+                             "../models/bvlc_reference_caffenet/bvlc_reference_caffenet.caffemodel"),
         help="Trained model weights file."
     )
     parser.add_argument(
@@ -105,9 +105,9 @@ def main(argv):
 
     # Make classifier.
     classifier = caffe.Classifier(args.model_def, args.pretrained_model,
-            image_dims=image_dims, mean=mean,
-            input_scale=args.input_scale, raw_scale=args.raw_scale,
-            channel_swap=channel_swap)
+                                  image_dims=image_dims, mean=mean,
+                                  input_scale=args.input_scale, raw_scale=args.raw_scale,
+                                  channel_swap=channel_swap)
 
     # Load numpy array (.npy), directory glob (*.jpg), or image file.
     args.input_file = os.path.expanduser(args.input_file)
@@ -116,8 +116,8 @@ def main(argv):
         inputs = np.load(args.input_file)
     elif os.path.isdir(args.input_file):
         print("Loading folder: %s" % args.input_file)
-        inputs =[caffe.io.load_image(im_f)
-                 for im_f in glob.glob(args.input_file + '/*.' + args.ext)]
+        inputs = [caffe.io.load_image(im_f)
+                  for im_f in glob.glob(args.input_file + '/*.' + args.ext)]
     else:
         print("Loading file: %s" % args.input_file)
         inputs = [caffe.io.load_image(args.input_file)]

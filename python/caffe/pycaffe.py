@@ -11,7 +11,7 @@ except:
 import numpy as np
 
 from ._caffe import Net, SGDSolver, NesterovSolver, AdaGradSolver, \
-        RMSPropSolver, AdaDeltaSolver, AdamSolver, NCCL, Timer
+    RMSPropSolver, AdaDeltaSolver, AdamSolver, NCCL, Timer
 import caffe.io
 
 import six
@@ -43,6 +43,7 @@ def _Net_blob_loss_weights(self):
                                                        self._blob_loss_weights))
     return self._blob_loss_weights_dict
 
+
 @property
 def _Net_layer_dict(self):
     """
@@ -63,9 +64,9 @@ def _Net_params(self):
     """
     if not hasattr(self, '_params_dict'):
         self._params_dict = OrderedDict([(name, lr.blobs)
-                                        for name, lr in zip(
-                                            self._layer_names, self.layers)
-                                        if len(lr.blobs) > 0])
+                                         for name, lr in zip(
+            self._layer_names, self.layers)
+            if len(lr.blobs) > 0])
     return self._params_dict
 
 
@@ -302,6 +303,7 @@ def _Net_batch(self, blobs):
                                                  padding])
         yield padded_batch
 
+
 def _Net_get_id_name(func, field):
     """
     Generic property that maps func to the layer names into an OrderedDict.
@@ -323,7 +325,7 @@ def _Net_get_id_name(func, field):
             id_to_name = list(self.blobs)
             res = OrderedDict([(self._layer_names[i],
                                 [id_to_name[j] for j in func(self, i)])
-                                for i in range(len(self.layers))])
+                               for i in range(len(self.layers))])
             setattr(self, field, res)
         return getattr(self, field)
     return get_id_name

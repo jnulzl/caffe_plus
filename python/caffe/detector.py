@@ -32,6 +32,7 @@ class Detector(caffe.Net):
         sized border of pixels in the network input image is context, as in
         R-CNN feature extraction.
     """
+
     def __init__(self, model_file, pretrained_file, mean=None,
                  input_scale=None, raw_scale=None, channel_swap=None,
                  context_pad=None):
