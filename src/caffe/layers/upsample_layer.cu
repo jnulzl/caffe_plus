@@ -53,7 +53,7 @@ namespace caffe {
 			
 			out[idx(c, new_height, new_width, h, w)] = 
 				h0lambda * (w0lambda * X0 + w1lambda * X1) + 
-				h1lambda * (w0lambda * X2 + w1lambda * W3);		
+				h1lambda * (w0lambda * X2 + w1lambda * X3);		
 		}
 	}
 
